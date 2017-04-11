@@ -17,9 +17,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.GeneralPath;
 import javax.swing.text.Segment;
 import javax.swing.text.TabExpander;
 import javax.swing.text.Utilities;
+import javax.swing.text.View;
 
 /**
  * This class represents the Style for a TokenType.  This class is responsible
@@ -90,6 +93,19 @@ public final class SyntaxStyle {
             fontStyle = (fontStyle & (-1 ^ Font.ITALIC));
         }
     }
+    
+    private boolean drawTabs = true;
+
+    public static final String PROP_DRAWTABS = "drawTabs";
+
+    public boolean isDrawTabs() {
+        return drawTabs;
+    }
+
+    public void setDrawTabs(boolean drawTabs) {
+        this.drawTabs = drawTabs;
+    }
+
 
     public int getFontStyle() {
         return fontStyle;
@@ -98,7 +114,83 @@ public final class SyntaxStyle {
     public Color getColor() {
         return color;
     }
+    
+    
+    /**
+     * Draw an arrow where tabs are found.
+     * 
+     * @param g
+     * @param s
+     * @param metrics
+     * @param x  the x of the left side of the segment.
+     * @param y  The vertical center of the arrow
+     * @param e
+     * @param startOffset
+     * @return 
+     */
+    static final int drawTabbedTextWidth( Graphics2D g, Segment s, FontMetrics metrics, int x, int y,
+                                        TabExpander e, int startOffset ) {
+        int nextX = x;
+        char[] txt = s.array;
+        int txtOffset = s.offset;
+        int n = s.offset + s.count;
+        int charCount = 0;
+        int spaceAddon = 0;
+        int spaceAddonLeftoverEnd = -1;
+        int startJustifiableContent = 0;
+        int endJustifiableContent = 0;
 
+        int currentX= x;
+        for (int i = txtOffset; i < n; i++) {
+            if (txt[i] == '\t'
+                || ((spaceAddon != 0 || i <= spaceAddonLeftoverEnd)
+                    && (txt[i] == ' ')
+                    && startJustifiableContent <= i
+                    && i <= endJustifiableContent
+                    )) {
+                nextX += metrics.charsWidth(txt, i-charCount, charCount);
+                charCount = 0;
+                if (txt[i] == '\t') {
+                    if (e != null) {
+                        nextX = (int) e.nextTabStop((float) nextX,
+                                                    startOffset + i - txtOffset);
+                    } else {
+                        nextX += metrics.charWidth(' ');
+                    }
+                } else if (txt[i] == ' ') {
+                    nextX += metrics.charWidth(' ') + spaceAddon;
+                    if (i <= spaceAddonLeftoverEnd) {
+                        nextX++;
+                    }
+                }
+                g.setColor(Color.LIGHT_GRAY);
+                int dx= 3;
+                int hy= y;
+                int hx= nextX-2;
+                GeneralPath p= new GeneralPath();
+                p.moveTo( hx, hy );        
+                p.lineTo( (hx-2*dx), (hy-dx-1) );
+                p.lineTo( (hx-2*dx), (hy+dx+1) );
+                p.lineTo( hx, hy );            
+                g.fill( p );
+                g.drawLine( currentX+2, y, (int)hx-2, y );
+                currentX= nextX;
+                
+            } else if(txt[i] == '\n') {
+            // Ignore newlines, they take up space and we shouldn't be
+            // counting them.
+                nextX += metrics.charsWidth(txt, i - charCount, charCount);
+                charCount = 0;
+                currentX= 0;
+            } else {
+                currentX+= metrics.charsWidth(txt, i, 1);
+                charCount++;
+            }
+        }
+        nextX += metrics.charsWidth(txt, n - charCount, charCount);
+        return nextX - x;
+    }
+    
     /**
      * Draw text.  This can directly call the Utilities.drawTabbedText.
      * Sub-classes can override this method to provide any other decorations.
@@ -126,6 +218,11 @@ public final class SyntaxStyle {
             graphics.setColor(Color.decode("#EEEEEE"));
             graphics.fillRect(rX, rY, rW, rH);
         }
+        
+        if ( drawTabs ) {
+            drawTabbedTextWidth( (Graphics2D)(graphics.create()), segment, fontMetrics, x, y-fontMetrics.getAscent()/2, e, startOffset );
+        }
+                
         graphics.setColor(getColor());
         x = Utilities.drawTabbedText(segment, x, y, graphics, e, startOffset);
         if ((getFontStyle() & 0x8) != 0) {
