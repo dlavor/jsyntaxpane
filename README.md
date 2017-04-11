@@ -59,3 +59,7 @@ Once you are done, and built your lexer, you can change the `SyntaxTester` to te
 
 _If you create Lexers, please consider contributing them._
 
+# Notes about Revisions
+
+This was forked from https://github.com/nordfalk/jsyntaxpane, so that it could be modified to draw tab characters.
+
