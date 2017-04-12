@@ -26,10 +26,14 @@ import jsyntaxpane.Token;
 /**
  * IndentAction is used to replace Tabs with spaces.  If there is selected
  * text, then the lines spanning the selection will be shifted
- * right by one tab-width space character.
+ * right by one tab-width space character.  
+ * 
+ * The property "insertTab" was added because it is difficult to remove
+ * an action.  (Yes, I know there's a better way to do this, but I can't figure
+ * it out.)
  *
  * Since this is also used as an abbreviation completion action,
- * Abbreviiations are processed by this event.
+ * Abbreviations are processed by this event.
  *
  * FIXME:  Move the abbreviation expansion to an ActionUtils proc
  * @author Ayman Al-Sairafi
@@ -55,7 +59,11 @@ public class IndentAction extends DefaultSyntaxAction {
 			int column = dot - lineStart;
 			int needed = tabStop - (column % tabStop);
 			if (abbrvs == null || abbrToken == null) {
-				target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
+                                if ( insertTab ) {
+                                    target.replaceSelection("\t");
+                                } else {
+                                    target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
+                                }
 			} else {
 				String abbr = abbrToken.getString(sDoc);
 				if (abbrvs.containsKey(abbr)) {
@@ -68,7 +76,11 @@ public class IndentAction extends DefaultSyntaxAction {
 						ActionUtils.insertSimpleTemplate(target, abbr);
 					}
 				} else {
+                                    if ( insertTab ) {
+                                        target.replaceSelection("\t");
+                                    } else {
 					target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
+                                    }
 				}
 			}
 		} else {
@@ -93,4 +105,23 @@ public class IndentAction extends DefaultSyntaxAction {
 	public Pattern getWordRegex() {
 		return wordsPattern;
 	}
+        
+        private boolean insertTab = true;
+
+        /**
+         * if true, simply insert a tab instead of turning tabs into spaces.
+         * @return if true, simply insert a tab instead of turning tabs into spaces.
+         */
+        public boolean getInsertTab() {
+            return insertTab;
+        }
+
+        /**
+         * if true, simply insert a tab instead of turning tabs into spaces.
+         * @param insertTab 
+         */
+        public void setInsertTab(boolean insertTab) {
+            this.insertTab = insertTab;
+        }
+
 }
