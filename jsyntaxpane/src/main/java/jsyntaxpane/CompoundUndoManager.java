@@ -60,34 +60,69 @@ public class CompoundUndoManager extends UndoManager {
     public void undoableEditHappened(UndoableEditEvent e) {
         //  Start a new compound edit
 
-        AbstractDocument.DefaultDocumentEvent docEvt = (DefaultDocumentEvent) e.getEdit();
+        UndoableEdit edt= e.getEdit();
+        System.err.println("Compound: "+e);
+        if ( edt instanceof DefaultDocumentEvent ) {
 
-        if (compoundEdit == null) {
+            AbstractDocument.DefaultDocumentEvent docEvt = (DefaultDocumentEvent) e.getEdit();
+
+            if (compoundEdit == null) {
+                compoundEdit = startCompoundEdit(e.getEdit());
+                startCombine = false;
+                updateDirty();
+                return;
+            }
+
+            int editLine = ((SyntaxDocument) docEvt.getDocument()).getLineNumberAt(docEvt.getOffset());
+
+            //  Check for an incremental edit or backspace.
+            //  The Change in Caret position and Document length should both be
+            //  either 1 or -1.
+            if ((startCombine || Math.abs(docEvt.getLength()) == 1) && editLine == lastLine) {
+                compoundEdit.addEdit(e.getEdit());
+                startCombine = false;
+                updateDirty();
+                return;
+            }
+
+            //  Not incremental edit, end previous edit and start a new one
+            lastLine = editLine;
+
+            compoundEdit.end();
             compoundEdit = startCompoundEdit(e.getEdit());
-            startCombine = false;
+
             updateDirty();
-            return;
+        } else {
+            
+//            UndoableEdit edit= e.getEdit();
+//            
+//            if (compoundEdit == null) {
+//                compoundEdit = startCompoundEdit(e.getEdit());
+//                startCombine = false;
+//                updateDirty();
+//                return;
+//            }
+//
+//            int editLine = ((SyntaxDocument) docEvt.getDocument()).getLineNumberAt(docEvt.getOffset());
+//
+//            //  Check for an incremental edit or backspace.
+//            //  The Change in Caret position and Document length should both be
+//            //  either 1 or -1.
+//            if ((startCombine || Math.abs(docEvt.getLength()) == 1) && editLine == lastLine) {
+//                compoundEdit.addEdit(e.getEdit());
+//                startCombine = false;
+//                updateDirty();
+//                return;
+//            }
+//
+//            //  Not incremental edit, end previous edit and start a new one
+//            lastLine = editLine;
+//
+//            compoundEdit.end();
+//            compoundEdit = startCompoundEdit(e.getEdit());
+//
+//            updateDirty();
         }
-
-        int editLine = ((SyntaxDocument) docEvt.getDocument()).getLineNumberAt(docEvt.getOffset());
-
-        //  Check for an incremental edit or backspace.
-        //  The Change in Caret position and Document length should both be
-        //  either 1 or -1.
-        if ((startCombine || Math.abs(docEvt.getLength()) == 1) && editLine == lastLine) {
-            compoundEdit.addEdit(e.getEdit());
-            startCombine = false;
-            updateDirty();
-            return;
-        }
-
-        //  Not incremental edit, end previous edit and start a new one
-        lastLine = editLine;
-
-        compoundEdit.end();
-        compoundEdit = startCompoundEdit(e.getEdit());
-
-        updateDirty();
     }
 
     private void updateDirty() {
