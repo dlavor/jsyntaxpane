@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
@@ -59,15 +60,23 @@ public class SyntaxDocument extends PlainDocument {
 		undo        = new CompoundUndoManager(this);    // Listen for undo and redo events
         propSupport = new PropertyChangeSupport(this);
 	}
-
-        /**
-         * things apparently change in Java 9, so give a way to replace the manager.
-         * This should be called immediately after creating the document.
-         * @see http://www.camick.com/java/source/CompoundUndoManager.java
-         * @param undo 
-         */
+        
+    /**
+     * things apparently change in Java 9, so give a way to replace the manager.
+     * This should be called immediately after creating the document.
+     * @see http://www.camick.com/java/source/CompoundUndoManager.java
+     * @param undo 
+     */
     public void setUndoManager( UndoManager undo ) {
+        if ( undo!=null ) {
+            this.removeUndoableEditListener(undo);
+        }
         this.undo= undo;
+        this.addUndoableEditListener(undo);
+    }
+        
+    public void resetUndo() {
+        undo.discardAllEdits();
     }
     
 	/*
@@ -390,7 +399,7 @@ public class SyntaxDocument extends PlainDocument {
 	}
 
     public boolean canUndo() {
-        return canUndoState; // undo.canUndo();
+        return undo.canUndo(); // undo.canUndo();
     }
 
 	/**
@@ -404,7 +413,7 @@ public class SyntaxDocument extends PlainDocument {
 	}
 
     public boolean canRedo() {
-        return canRedoState; // undo.canRedo();
+        return undo.canRedo(); // undo.canRedo();
     }
 
     /**
@@ -594,9 +603,9 @@ public class SyntaxDocument extends PlainDocument {
 	@Override
 	public void replace(int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
 		remove(offset, length);
-		if ( undo instanceof CompoundUndoManager ) {
-                    ((CompoundUndoManager)undo).startCombine();
-                }
+        if ( undo instanceof CompoundUndoManager ) {
+            ((CompoundUndoManager)undo).startCombine();
+        }
 		insertString(offset, text, attrs);
 	}
 
