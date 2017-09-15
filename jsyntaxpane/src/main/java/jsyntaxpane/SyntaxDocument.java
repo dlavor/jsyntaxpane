@@ -31,6 +31,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.Segment;
+import javax.swing.undo.UndoManager;
 
 /**
  * A document that supports being highlighted.  The document maintains an
@@ -45,7 +46,7 @@ public class SyntaxDocument extends PlainDocument {
 
 	Lexer lexer;
 	List<Token> tokens;
-	CompoundUndoManager undo;
+	UndoManager undo;
 
     private final PropertyChangeSupport propSupport;
     private boolean canUndoState = false;
@@ -59,6 +60,16 @@ public class SyntaxDocument extends PlainDocument {
         propSupport = new PropertyChangeSupport(this);
 	}
 
+        /**
+         * things apparently change in Java 9, so give a way to replace the manager.
+         * This should be called immediately after creating the document.
+         * @see http://www.camick.com/java/source/CompoundUndoManager.java
+         * @param undo 
+         */
+    public void setUndoManager( UndoManager undo ) {
+        this.undo= undo;
+    }
+    
 	/*
 	 * Parse the entire document and return list of tokens that do not already
 	 * exist in the tokens list.  There may be overlaps, and replacements,
@@ -583,7 +594,9 @@ public class SyntaxDocument extends PlainDocument {
 	@Override
 	public void replace(int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
 		remove(offset, length);
-		undo.startCombine();
+		if ( undo instanceof CompoundUndoManager ) {
+                    ((CompoundUndoManager)undo).startCombine();
+                }
 		insertString(offset, text, attrs);
 	}
 
