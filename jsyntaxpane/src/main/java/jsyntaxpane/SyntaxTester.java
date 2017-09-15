@@ -260,6 +260,7 @@ public class SyntaxTester extends javax.swing.JFrame {
 			throw new IOException(ex); // Should never happen
 		}
 		jEdtTest.setDocument(doc);
+        ((SyntaxDocument)jEdtTest.getDocument()).resetUndo();
 	}
 	/**
 	 * @param args the command line arguments
