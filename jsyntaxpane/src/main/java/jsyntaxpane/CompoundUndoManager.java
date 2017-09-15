@@ -14,6 +14,7 @@
  */
 package jsyntaxpane;
 
+import java.util.logging.Logger;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AbstractDocument.DefaultDocumentEvent;
@@ -35,7 +36,7 @@ import javax.swing.undo.*;
  * @author Ayman Al-Sairafi, Hanns Holger Rutz
  */
 public class CompoundUndoManager extends UndoManager {
-
+    private static final Logger logger = Logger.getLogger(CompoundUndoManager.class.getName());
     private final SyntaxDocument doc;
 
     private CompoundEdit compoundEdit;
@@ -61,7 +62,7 @@ public class CompoundUndoManager extends UndoManager {
         //  Start a new compound edit
 
         UndoableEdit edt= e.getEdit();
-        System.err.println("Compound: "+e);
+        
         if ( edt instanceof DefaultDocumentEvent ) {
 
             AbstractDocument.DefaultDocumentEvent docEvt = (DefaultDocumentEvent) e.getEdit();
@@ -93,7 +94,7 @@ public class CompoundUndoManager extends UndoManager {
 
             updateDirty();
         } else {
-            
+            logger.fine("Undo/Redo not yet supported under Java 9");
 //            UndoableEdit edit= e.getEdit();
 //            
 //            if (compoundEdit == null) {
