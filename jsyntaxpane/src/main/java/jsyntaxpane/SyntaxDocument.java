@@ -45,6 +45,8 @@ public class SyntaxDocument extends PlainDocument {
     public static final String CAN_UNDO = "can-undo";
     public static final String CAN_REDO = "can-redo";
 
+    private static final Logger logger= Logger.getLogger(SyntaxDocument.class.getName());
+    
 	Lexer lexer;
 	List<Token> tokens;
 	UndoManager undo;
@@ -68,11 +70,13 @@ public class SyntaxDocument extends PlainDocument {
      * @param undo 
      */
     public void setUndoManager( UndoManager undo ) {
-        if ( undo!=null ) {
-            this.removeUndoableEditListener(undo);
+        logger.fine("setUndoManager("+undo+")");
+        if ( this.undo!=null ) {
+            logger.finer("remove old manager "+this.undo);
+            this.removeUndoableEditListener(this.undo);
         }
         this.undo= undo;
-        this.addUndoableEditListener(undo);
+        this.addUndoableEditListener(this.undo);
     }
         
     public void resetUndo() {
