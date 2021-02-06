@@ -3,10 +3,11 @@
 JSyntaxPane is a simple to use editorKit that adds syntax highlighting support to a standard JEditorPane.
 The languages currently supported are C, C++, Java, JavaScript, Groovy, SQL, Python, Ruby, Scala, Bash, XPath, Clojure, Lua, XHTML and XML - [full list here](https://github.com/nordfalk/jsyntaxpane/blob/master/jsyntaxpane/src/main/resources/META-INF/services/jsyntaxpane/kitsfortypes.properties)
 
-The original project JSyntaxPane can be found [on google-code](http://code.google.com/p/jsyntaxpane/). This is a fork from the 0.9.6 branch with [Hanns Holger Rutz](https://github.com/Sciss/SyntaxPane)'s work applied.
+The original project JSyntaxPane can be found [on google-code](http://code.google.com/p/jsyntaxpane/). This was a fork from the 0.9.6 branch with [Hanns Holger Rutz](https://github.com/Sciss/SyntaxPane)'s work applied.
 
 The original project is (C)opyright by Ayman Al-Sairafi and released under the [Apache License, Version 2.0](http://github.com/Sciss/JSyntaxPane/blob/master/licenses/JSyntaxPane-License.txt).
 
+This was forked from https://github.com/nordfalk/jsyntaxpane, so that it could be modified to draw tab characters.
 
 # How to use #
 
