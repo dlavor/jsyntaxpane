@@ -128,7 +128,9 @@ public class LineNumbersRuler extends JPanel
 		mouseListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GotoLineDialog.showForEditor(editor);
+                if ( e.isShiftDown() ) {
+                    GotoLineDialog.showForEditor(editor);
+                }
 			}
 		};
 		addMouseListener(mouseListener);
