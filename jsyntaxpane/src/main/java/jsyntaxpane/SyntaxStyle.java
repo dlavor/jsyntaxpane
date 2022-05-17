@@ -163,14 +163,16 @@ public final class SyntaxStyle {
                         nextX++;
                     }
                 }
-                g.setColor(Color.LIGHT_GRAY);
+                //g.setColor(Color.LIGHT_GRAY);
+                g.setColor(new Color(220, 220, 220));
                 int dx= 3;
                 int hy= y;
-                int hx= nextX-2;
+                //int hx= nextX-2;
+                int hx= nextX-4;
                 GeneralPath p= new GeneralPath();
                 p.moveTo( hx, hy );        
-                p.lineTo( (hx-2*dx), (hy-dx-1) );
-                p.lineTo( (hx-2*dx), (hy+dx+1) );
+                //p.lineTo( (hx-2*dx), (hy-dx-1) ); // triangle
+                //p.lineTo( (hx-2*dx), (hy+dx+1) ); // triangle
                 p.lineTo( hx, hy );            
                 g.fill( p );
                 g.drawLine( currentX+2, y, (int)hx-2, y );
