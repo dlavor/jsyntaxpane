@@ -47,6 +47,7 @@ public class JIndentAction extends DefaultSyntaxAction {
 		String line = ActionUtils.getLine(target);
 		String lineToPos = line.substring(0, pos - start);
 		String prefix = ActionUtils.getIndent(line);
+		String suffix = prefix; // for proper closing bracket indent
 		Boolean moveCaret = false;
 		Token t = sDoc.getTokenAt(pos);
 		if (TokenType.isComment(t)) {
@@ -69,15 +70,13 @@ public class JIndentAction extends DefaultSyntaxAction {
 				prefix += " ";
 			}
 		} else if (lineToPos.trim().endsWith("{")) {
-			//prefix += ActionUtils.getTab(target);
-			prefix += "\t\n";
+			prefix += "\t\n" + suffix;
 			moveCaret = true;
 		} else {
 			String noComment = sDoc.getUncommentedText(start, pos); // skip EOL comments
 
 			if (noComment.trim().endsWith("{")) {
-				//prefix += ActionUtils.getTab(target);
-				prefix += "\t\n";
+				prefix += "\t\n" + suffix;
 				moveCaret = true;
 			}
 		}
@@ -87,7 +86,7 @@ public class JIndentAction extends DefaultSyntaxAction {
 		if (moveCaret) {
 			// place caret between brackets
 			int currentPosition = target.getCaretPosition();
-			target.setCaretPosition(currentPosition - 1);
+			target.setCaretPosition(currentPosition - suffix.length() - 1);
 		}
 	}
 }
