@@ -44,13 +44,14 @@ public class PairAction extends DefaultSyntaxAction {
             target.setCaretPosition(target.getCaretPosition() - right.length());
         }
     }
-    private static Map<String, String> PAIRS = new HashMap<String, String>(4);
-
+    private static Map<String, String> PAIRS = new HashMap<String, String>(6);
 
     static {
         PAIRS.put("(", ")");
         PAIRS.put("[", "]");
+        PAIRS.put("{", "}");
         PAIRS.put("\"", "\"");
+        PAIRS.put("'", "'");
         PAIRS.put("'", "'");
     }
 }
