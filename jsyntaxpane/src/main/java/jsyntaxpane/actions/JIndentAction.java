@@ -47,6 +47,7 @@ public class JIndentAction extends DefaultSyntaxAction {
 		String line = ActionUtils.getLine(target);
 		String lineToPos = line.substring(0, pos - start);
 		String prefix = ActionUtils.getIndent(line);
+		Boolean moveCaret = false;
 		Token t = sDoc.getTokenAt(pos);
 		if (TokenType.isComment(t)) {
 			String trimmed = line.trim();
@@ -68,14 +69,25 @@ public class JIndentAction extends DefaultSyntaxAction {
 				prefix += " ";
 			}
 		} else if (lineToPos.trim().endsWith("{")) {
-			prefix += ActionUtils.getTab(target);
+			//prefix += ActionUtils.getTab(target);
+			prefix += "\t\n";
+			moveCaret = true;
 		} else {
 			String noComment = sDoc.getUncommentedText(start, pos); // skip EOL comments
 
 			if (noComment.trim().endsWith("{")) {
-				prefix += ActionUtils.getTab(target);
+				//prefix += ActionUtils.getTab(target);
+				prefix += "\t\n";
+				moveCaret = true;
 			}
 		}
+
 		target.replaceSelection("\n" + prefix);
+
+		if (moveCaret) {
+			// place caret between brackets
+			int currentPosition = target.getCaretPosition();
+			target.setCaretPosition(currentPosition - 1);
+		}
 	}
 }

@@ -51,6 +51,7 @@ public class IndentAction extends DefaultSyntaxAction {
 		String selected = target.getSelectedText();
 		EditorKit kit = ((JEditorPane) target).getEditorKit();
 		Map<String, String> abbrvs = ((DefaultSyntaxKit) kit).getAbbreviations();
+
 		if (selected == null) {
 			// Check for abbreviations:
 			Token abbrToken = sDoc.getWordAt(dot, wordsPattern);
@@ -58,12 +59,13 @@ public class IndentAction extends DefaultSyntaxAction {
 			int lineStart = sDoc.getParagraphElement(dot).getStartOffset();
 			int column = dot - lineStart;
 			int needed = tabStop - (column % tabStop);
+
 			if (abbrvs == null || abbrToken == null) {
-                                if ( insertTab ) {
-                                    target.replaceSelection("\t");
-                                } else {
-                                    target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
-                                }
+				if (insertTab) {
+					target.replaceSelection("\t");
+				} else {
+				    target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
+				}
 			} else {
 				String abbr = abbrToken.getString(sDoc);
 				if (abbrvs.containsKey(abbr)) {
@@ -76,11 +78,11 @@ public class IndentAction extends DefaultSyntaxAction {
 						ActionUtils.insertSimpleTemplate(target, abbr);
 					}
 				} else {
-                                    if ( insertTab ) {
-                                        target.replaceSelection("\t");
-                                    } else {
-					target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
-                                    }
+					if (insertTab) {
+						target.replaceSelection("\t");
+					} else {
+						target.replaceSelection(ActionUtils.SPACES.substring(0, needed));
+					}
 				}
 			}
 		} else {
@@ -88,9 +90,10 @@ public class IndentAction extends DefaultSyntaxAction {
 			int start = target.getSelectionStart();
 			StringBuilder sb = new StringBuilder();
 			for (String line : lines) {
-				sb.append(ActionUtils.getTab(target));
+				//sb.append(ActionUtils.getTab(target));
+				sb.append("\t");
 				sb.append(line);
-				sb.append('\n');
+				sb.append("\n");
 			}
 			target.replaceSelection(sb.toString());
 			target.select(start, start + sb.length());
@@ -105,23 +108,22 @@ public class IndentAction extends DefaultSyntaxAction {
 	public Pattern getWordRegex() {
 		return wordsPattern;
 	}
-        
-        private boolean insertTab = true;
+	
+	private boolean insertTab = true;
 
-        /**
-         * if true, simply insert a tab instead of turning tabs into spaces.
-         * @return if true, simply insert a tab instead of turning tabs into spaces.
-         */
-        public boolean getInsertTab() {
-            return insertTab;
-        }
+	/**
+	 * if true, simply insert a tab instead of turning tabs into spaces.
+	 * @return if true, simply insert a tab instead of turning tabs into spaces.
+	 */
+	public boolean getInsertTab() {
+		return insertTab;
+	}
 
-        /**
-         * if true, simply insert a tab instead of turning tabs into spaces.
-         * @param insertTab 
-         */
-        public void setInsertTab(boolean insertTab) {
-            this.insertTab = insertTab;
-        }
-
+	/**
+	 * if true, simply insert a tab instead of turning tabs into spaces.
+	 * @param insertTab 
+	 */
+	public void setInsertTab(boolean insertTab) {
+	    this.insertTab = insertTab;
+	}
 }
