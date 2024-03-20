@@ -13,13 +13,8 @@
  */
 package jsyntaxpane.util;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.awt.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -28,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * Wrapper around the Properties class with supprt for Heirarchical confogurations
  * and more functionality.
- *
+ * <p>
  * Except for the getXXXX methods, all other Map Interface methods operate on the
  * current (non-parent) collection and do NOT touch the parent.
  *
@@ -63,6 +58,7 @@ public class Configuration implements Map<String, String> {
 
     /**
      * Creates an empty Configuration
+     *
      * @param theClass
      */
     public Configuration(Class theClass) {
@@ -80,6 +76,7 @@ public class Configuration implements Map<String, String> {
      * Configuration (usually ClassName) with "." replaced by "/", and then
      * converted to all lowercase</li>
      * <li><code>class_simpleName</code></li> is replaced by class.SimpleName
+     *
      * @param key
      * @return
      */
@@ -107,7 +104,7 @@ public class Configuration implements Map<String, String> {
                     if (p_value == null) {
                         Logger.getLogger(this.getClass().getName()).warning(
                                 "no value for ${" + p_key +
-                                "} is defined");
+                                        "} is defined");
                     }
                 }
                 m.appendReplacement(sb, p_value);
@@ -121,10 +118,11 @@ public class Configuration implements Map<String, String> {
     /**
      * Returns a non-null value either by traversing the current
      * and parent(s) map, or returning the defaultValue
+     *
      * @param key
      * @param defaultValue
-     * @throws NullPointerException if defaultValue is null
      * @return
+     * @throws NullPointerException if defaultValue is null
      */
     public String getString(String key, String defaultValue) {
         if (defaultValue == null) {
@@ -138,6 +136,7 @@ public class Configuration implements Map<String, String> {
      * Gets an integer from the properties.  If number cannot be found
      * or if it cannot be decoded, the default is returned
      * The integer is decoded using {@link Integer.decode(String)}
+     *
      * @param key
      * @param Default
      * @return
@@ -158,10 +157,11 @@ public class Configuration implements Map<String, String> {
 
     /**
      * Returns a String[] of the comma separated items in the value.
-     *
+     * <p>
      * Does NOT return null.  If the key is not found,
      * then an empty string array is returned.  So the return of this method
      * can always be used directly in a foreach loop
+     *
      * @param key
      * @return non-null String[]
      */
@@ -176,6 +176,7 @@ public class Configuration implements Map<String, String> {
 
     /**
      * Returns a boolean from the configuration
+     *
      * @param key
      * @param Default
      * @return
@@ -190,6 +191,7 @@ public class Configuration implements Map<String, String> {
 
     /**
      * return the Color that has the given key or the Default
+     *
      * @param key
      * @param Default
      * @return
@@ -209,7 +211,7 @@ public class Configuration implements Map<String, String> {
 
     @SuppressWarnings("unchecked")
     @Override
-	public void putAll(Map config) {
+    public void putAll(Map config) {
         if (props == null) {
             props = new HashMap<String, String>();
         }
@@ -289,7 +291,7 @@ public class Configuration implements Map<String, String> {
     @Override
     public Set<String> keySet() {
         if (props == null) {
-			return Collections.emptySet();
+            return Collections.emptySet();
         } else {
             return props.keySet();
         }
@@ -298,7 +300,7 @@ public class Configuration implements Map<String, String> {
     @Override
     public Collection<String> values() {
         if (props == null) {
-			return Collections.emptySet();
+            return Collections.emptySet();
         } else {
             return props.values();
         }
@@ -307,7 +309,7 @@ public class Configuration implements Map<String, String> {
     @Override
     public Set<Entry<String, String>> entrySet() {
         if (props == null) {
-			return Collections.emptySet();
+            return Collections.emptySet();
         } else {
             return props.entrySet();
         }
@@ -329,6 +331,7 @@ public class Configuration implements Map<String, String> {
             this.group1 = group1;
             this.value = value;
         }
+
         /**
          * The full key matched
          */
@@ -351,6 +354,7 @@ public class Configuration implements Map<String, String> {
      * Obtain a set of all keys (and parent's keys) that match the given pattern.
      * If no keys match, then an empty set is returned.
      * Use this instead of the {@link stringPropertyNames}
+     *
      * @param pattern
      * @return
      */
@@ -368,6 +372,7 @@ public class Configuration implements Map<String, String> {
         }
         return matched;
     }
+
     public static final String[] EMPTY_LIST = new String[0];
     public static final Pattern COMMA_SEPARATOR = Pattern.compile("\\s*,\\s*");
     private static Pattern PARENT_KEY = Pattern.compile("\\$\\{(\\w+)\\}");

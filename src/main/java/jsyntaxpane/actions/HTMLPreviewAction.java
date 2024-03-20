@@ -13,18 +13,18 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.text.JTextComponent;
 import jsyntaxpane.SyntaxDocument;
 import jsyntaxpane.actions.gui.HTMLPreviewFrame;
+
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
 
 /**
  * Show an HTML Preview window.
  * This will automatically update on changes to the underlying document.
- * 
  */
 public class HTMLPreviewAction extends DefaultSyntaxAction {
-	public static final String HTML_PREVIEW_WINDOW = "html-preview-window";
+    public static final String HTML_PREVIEW_WINDOW = "html-preview-window";
 
     public HTMLPreviewAction() {
         super("HTML_PREVIEW");
@@ -32,12 +32,12 @@ public class HTMLPreviewAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         // have the document property
         Object obj = sDoc.getProperty(HTML_PREVIEW_WINDOW);
-        if(obj == null) {
+        if (obj == null) {
             HTMLPreviewFrame dlg = new HTMLPreviewFrame(sDoc);
-            sDoc.putProperty( HTML_PREVIEW_WINDOW,dlg);
+            sDoc.putProperty(HTML_PREVIEW_WINDOW, dlg);
             dlg.setVisible(true);
         } else {
             HTMLPreviewFrame dlg = (HTMLPreviewFrame) obj;

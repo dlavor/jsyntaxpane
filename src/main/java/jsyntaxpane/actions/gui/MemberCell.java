@@ -13,29 +13,20 @@
  */
 package jsyntaxpane.actions.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Member;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.*;
-
 import jsyntaxpane.SyntaxView;
 import jsyntaxpane.actions.ActionUtils;
 import jsyntaxpane.util.ReflectUtils;
 
+import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.*;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This class will render a Member.  There are Method, Field and Constructor subclasses
+ *
  * @author Ayman Al-Sairafi
  */
 abstract class MemberCell extends JPanel {
@@ -91,7 +82,7 @@ abstract class MemberCell extends JPanel {
     }
 
     private int drawString(String string, int x, int y, Graphics g) {
-        if(ActionUtils.isEmptyOrBlanks(string)) {
+        if (ActionUtils.isEmptyOrBlanks(string)) {
             return x;
         }
         int w = g.getFontMetrics().stringWidth(string);
@@ -104,6 +95,7 @@ abstract class MemberCell extends JPanel {
      * fully qualified URL for the icons.  The icon names read will have the words
      * _private, protected, _static, _static_private and _static_protected and the
      * extension ".png" appended.
+     *
      * @param loc root for icon locations
      * @return Map (can be used directly with getModifiers & 0xf)
      */
@@ -141,6 +133,7 @@ abstract class MemberCell extends JPanel {
 
 /**
  * Renders a Method
+ *
  * @author Ayman Al-Sairafi
  */
 class MethodCell extends MemberCell {
@@ -170,12 +163,14 @@ class MethodCell extends MemberCell {
         }
         return icons.get(type);
     }
+
     private static Map<Integer, Image> icons = null;
     public static final String METHOD_ICON_LOC = "jsyntaxpane/images/completions/method";
 }
 
 /**
  * Renders a Field
+ *
  * @author Ayman Al-Sairafi
  */
 class FieldCell extends MemberCell {
@@ -208,12 +203,14 @@ class FieldCell extends MemberCell {
         }
         return icons.get(type);
     }
+
     private static Map<Integer, Image> icons = null;
     public static final String FIELD_ICON_LOC = "jsyntaxpane/images/completions/field";
 }
 
 /**
  * Renders a Field
+ *
  * @author Ayman Al-Sairafi
  */
 class ConstructorCell extends MemberCell {

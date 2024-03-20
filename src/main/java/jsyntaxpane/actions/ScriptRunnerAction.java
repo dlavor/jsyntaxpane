@@ -13,23 +13,22 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
+import jsyntaxpane.SyntaxDocument;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
+import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
 
 /**
  * Executes the script in the component's text using a ScriptEngine
  * The Configuration must contain the key [prefix.]ACTION_NAME.ScriptExtension
  * and its value is the ScriptExtension that getEngineByExtension returns
  * If no engine is found, then an option is given to the user to disable the action
- * 
+ *
  * @author Ayman Al-Sairafi
  */
 public class ScriptRunnerAction extends DefaultSyntaxAction {
@@ -40,7 +39,7 @@ public class ScriptRunnerAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         try {
             ScriptEngine eng = getEngine(target);
             if (eng != null) {

@@ -13,19 +13,19 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.text.JTextComponent;
-
 import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
 
 /**
  * Redo action
  */
 public class RedoAction extends AbstractUndoRedoAction {
 
-	public RedoAction() {
-		super(SyntaxDocument.CAN_REDO, "REDO");
-	}
+    public RedoAction() {
+        super(SyntaxDocument.CAN_REDO, "REDO");
+    }
 
     @Override
     protected boolean updateState() {
@@ -33,7 +33,7 @@ public class RedoAction extends AbstractUndoRedoAction {
     }
 
     @Override
-	public void actionPerformed(JTextComponent target, SyntaxDocument sDoc, int dot, ActionEvent e) {
-		if (sDoc != null) sDoc.doRedo();
-	}
+    public void actionPerformed(JTextComponent target, SyntaxDocument sDoc, int dot, ActionEvent e) {
+        if (sDoc != null) sDoc.doRedo();
+    }
 }

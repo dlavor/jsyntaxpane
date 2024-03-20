@@ -14,23 +14,23 @@
  */
 package jsyntaxpane;
 
-import java.util.logging.Logger;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AbstractDocument.DefaultDocumentEvent;
 import javax.swing.undo.*;
+import java.util.logging.Logger;
 
 /**
  * A revised UndoManager that groups undos based on positions. If the change is
  * relatively next to the previous change, like when continuous typing, then the
  * undoes are grouped together.
- *
+ * <p>
  * This is customized from the
- *
+ * <p>
  * http://www.camick.com/java/source/CompoundUndoManager.java
- *
+ * <p>
  * from the blog:
- *
+ * <p>
  * http://tips4java.wordpress.com/2008/10/27/compound-undo-manager/
  *
  * @author Ayman Al-Sairafi, Hanns Holger Rutz
@@ -61,9 +61,9 @@ public class CompoundUndoManager extends UndoManager {
     public void undoableEditHappened(UndoableEditEvent e) {
         //  Start a new compound edit
 
-        UndoableEdit edt= e.getEdit();
-        
-        if ( edt instanceof DefaultDocumentEvent ) {
+        UndoableEdit edt = e.getEdit();
+
+        if (edt instanceof DefaultDocumentEvent) {
 
             AbstractDocument.DefaultDocumentEvent docEvt = (DefaultDocumentEvent) e.getEdit();
 
@@ -162,8 +162,8 @@ public class CompoundUndoManager extends UndoManager {
     }
 
     /*
-                         **  Each CompoundEdit will store a group of related incremental edits
-                         **  (ie. each character typed or backspaced is an incremental edit)
+     **  Each CompoundEdit will store a group of related incremental edits
+     **  (ie. each character typed or backspaced is an incremental edit)
      */
     private CompoundEdit startCompoundEdit(UndoableEdit anEdit) {
         //  Track Caret and Document information of this compound edit

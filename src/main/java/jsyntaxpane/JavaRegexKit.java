@@ -13,11 +13,11 @@
  */
 package jsyntaxpane;
 
-import java.io.IOException;
 import jsyntaxpane.lexers.SimpleRegexLexer;
 
+import java.io.IOException;
+
 /**
- *
  * @author Ayman Al-Sairafi
  */
 public class JavaRegexKit extends DefaultSyntaxKit {

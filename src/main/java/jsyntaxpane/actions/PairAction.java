@@ -13,16 +13,17 @@
  */
 package jsyntaxpane.actions;
 
+import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
 
 /**
  * A Pair action inserts a pair of characters (left and right) around the
  * current selection, and then places the caret between them
- *
+ * <p>
  * The pairs are hard-coded here.
  */
 public class PairAction extends DefaultSyntaxAction {
@@ -33,7 +34,7 @@ public class PairAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         String left = e.getActionCommand();
         String right = PAIRS.get(left);
         String selected = target.getSelectedText();
@@ -44,6 +45,7 @@ public class PairAction extends DefaultSyntaxAction {
             target.setCaretPosition(target.getCaretPosition() - right.length());
         }
     }
+
     private static Map<String, String> PAIRS = new HashMap<String, String>(6);
 
     static {

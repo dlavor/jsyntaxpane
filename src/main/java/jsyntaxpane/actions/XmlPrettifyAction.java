@@ -13,32 +13,29 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.text.JTextComponent;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import jsyntaxpane.SyntaxDocument;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+
 /**
  * Attempt to prettify an XML document.
+ *
  * @author Ayman Al-Sairafi
  */
 public class XmlPrettifyAction extends DefaultSyntaxAction {
@@ -65,7 +62,7 @@ public class XmlPrettifyAction extends DefaultSyntaxAction {
         } catch (SAXParseException ex) {
             showErrorMessage(target,
                     String.format("XML error: %s\nat(%d, %d)",
-                    ex.getMessage(), ex.getLineNumber(), ex.getColumnNumber()));
+                            ex.getMessage(), ex.getLineNumber(), ex.getColumnNumber()));
             ActionUtils.setCaretPosition(target, ex.getLineNumber(), ex.getColumnNumber() - 1);
         } catch (TransformerException ex) {
             showErrorMessage(target, ex.getMessageAndLocation());
@@ -75,6 +72,7 @@ public class XmlPrettifyAction extends DefaultSyntaxAction {
             showErrorMessage(target, ex.getLocalizedMessage());
         }
     }
+
     static Transformer transformer;
     static DocumentBuilderFactory docBuilderFactory;
     static DocumentBuilder docBuilder;

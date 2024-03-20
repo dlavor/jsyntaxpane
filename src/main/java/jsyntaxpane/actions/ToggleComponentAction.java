@@ -13,10 +13,11 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.JEditorPane;
-import javax.swing.text.JTextComponent;
 import jsyntaxpane.DefaultSyntaxKit;
+
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
 
 /**
  * This Action will Toggle any SyntaxComponents on the EditorPane
@@ -24,6 +25,7 @@ import jsyntaxpane.DefaultSyntaxKit;
  * Where:
  * ACTION_NAME is the name given to the action (prefix.Action.ACTION_NAME)
  * componentclassname is the fully qualified class name of the component
+ *
  * @author Ayman Al-Sairafi
  */
 public class ToggleComponentAction extends DefaultSyntaxAction {
@@ -38,7 +40,7 @@ public class ToggleComponentAction extends DefaultSyntaxAction {
     public void setComponent(String name) {
         componentName = name;
     }
-    
+
     @Override
     public String toString() {
         return super.toString() + "(" + componentName + ")";

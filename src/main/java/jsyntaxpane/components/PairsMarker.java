@@ -1,29 +1,30 @@
 /*
  * Copyright 2008 Ayman Al-Sairafi ayman.alsairafi@gmail.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License 
- *       at http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License.  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License
+ *       at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jsyntaxpane.components;
 
+import jsyntaxpane.SyntaxDocument;
+import jsyntaxpane.Token;
 import jsyntaxpane.actions.ActionUtils;
-import java.awt.Color;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.JEditorPane;
+import jsyntaxpane.util.Configuration;
+
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
-import jsyntaxpane.Token;
-import jsyntaxpane.util.Configuration;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * This class highlights any pairs of the given language.  Pairs are defined
@@ -87,11 +88,11 @@ public class PairsMarker implements CaretListener, SyntaxComponent, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("document")) {
-                pane.removeCaretListener(this);
+            pane.removeCaretListener(this);
             if (status.equals(Status.INSTALLING)) {
                 pane.addCaretListener(this);
                 removeMarkers();
             }
         }
-    }    
+    }
 }

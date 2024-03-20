@@ -13,14 +13,16 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.text.JTextComponent;
 import jsyntaxpane.SyntaxDocument;
 import jsyntaxpane.Token;
 import jsyntaxpane.TokenType;
 
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
+
 /**
  * Completes an the Tag.
+ *
  * @author Ayman Al-Sairafi
  */
 public class XmlTagCompleteAction extends DefaultSyntaxAction {
@@ -31,7 +33,7 @@ public class XmlTagCompleteAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         Token tok = sDoc.getTokenAt(dot);
         while (tok != null && tok.type != TokenType.TYPE) {
             tok = sDoc.getPrevToken(tok);

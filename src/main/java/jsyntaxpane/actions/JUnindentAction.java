@@ -13,11 +13,12 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
 import jsyntaxpane.SyntaxDocument;
 import jsyntaxpane.Token;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
 
 public class JUnindentAction extends DefaultSyntaxAction {
 
@@ -34,7 +35,7 @@ public class JUnindentAction extends DefaultSyntaxAction {
      */
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         int pos = target.getCaretPosition();
         int start = sDoc.getParagraphElement(pos).getStartOffset();
         String line = ActionUtils.getLine(target);

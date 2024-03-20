@@ -13,12 +13,13 @@
  */
 package jsyntaxpane.actions;
 
-import javax.swing.JLabel;
+import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
 
 /**
  * This class can be used to display the caret location in friendly manner for
@@ -56,15 +57,15 @@ public class CaretMonitor implements CaretListener {
         this.label = label;
         this.text = text;
         text.addCaretListener(this);
-		updateLabel(text.getCaretPosition());
+        updateLabel(text.getCaretPosition());
     }
 
     @Override
     public void caretUpdate(CaretEvent evt) {
-		updateLabel(evt.getDot());
-	}
+        updateLabel(evt.getDot());
+    }
 
-	protected void updateLabel(int pos) {
+    protected void updateLabel(int pos) {
         if (text.getDocument() instanceof SyntaxDocument) {
             try {
                 if (text.getSelectionStart() == text.getSelectionEnd()) {

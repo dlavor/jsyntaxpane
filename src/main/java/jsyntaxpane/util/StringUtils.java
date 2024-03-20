@@ -25,11 +25,12 @@ public class StringUtils {
 
     /**
      * Perfrom a String startsWith match with support for CamelCase.
+     *
      * @param word full word
      * @param abbr abbriviated word
      * @return true if the word startsWith abbr, or if any uppercase char in abbr
      * matches the next uppercase char in word
-     *
+     * <p>
      * FIXME: not so effecient as it creates a StringBuilder, but works
      * FIXME: add {@code Comparator<String, String>}
      */

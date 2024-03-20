@@ -1,38 +1,39 @@
 /*
  * Copyright 2008 Ayman Al-Sairafi ayman.alsairafi@gmail.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License 
- *       at http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License.  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License
+ *       at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jsyntaxpane.components;
 
+import jsyntaxpane.SyntaxDocument;
+import jsyntaxpane.Token;
+import jsyntaxpane.TokenType;
 import jsyntaxpane.actions.ActionUtils;
+import jsyntaxpane.util.Configuration;
+
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
-import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
-import javax.swing.JEditorPane;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import jsyntaxpane.SyntaxDocument;
-import jsyntaxpane.Token;
-import jsyntaxpane.TokenType;
-import jsyntaxpane.util.Configuration;
 
 /**
  * This class highlights Tokens within a document whenever the caret is moved
  * to a TokenType provided in the config file.
- * 
+ *
  * @author Ayman Al-Sairafi
  */
 public class TokenMarker implements SyntaxComponent, CaretListener, PropertyChangeListener {
@@ -77,6 +78,7 @@ public class TokenMarker implements SyntaxComponent, CaretListener, PropertyChan
 
     /**
      * add highlights for the given pattern
+     *
      * @param pattern
      */
     void addMarkers(Token tok) {
@@ -131,12 +133,13 @@ public class TokenMarker implements SyntaxComponent, CaretListener, PropertyChan
         removeMarkers();
         pane.removeCaretListener(this);
     }
+
     private static final Logger LOG = Logger.getLogger(TokenMarker.class.getName());
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("document")) {
-                pane.removeCaretListener(this);
+            pane.removeCaretListener(this);
             if (status.equals(Status.INSTALLING)) {
                 pane.addCaretListener(this);
                 removeMarkers();

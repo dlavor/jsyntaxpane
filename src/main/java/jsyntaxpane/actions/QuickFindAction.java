@@ -13,23 +13,23 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.text.JTextComponent;
 import jsyntaxpane.SyntaxDocument;
 
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
+
 /**
- *
  * @author Ayman Al-Sairafi
  */
 public class QuickFindAction extends DefaultSyntaxAction {
 
-	public QuickFindAction() {
-		super("quick-find");
-	}
+    public QuickFindAction() {
+        super("quick-find");
+    }
 
-	@Override
-	public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-		int dot, ActionEvent e) {
-		DocumentSearchData.getFromEditor(target).showQuickFindDialog(target);
-	}
+    @Override
+    public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
+                                int dot, ActionEvent e) {
+        DocumentSearchData.getFromEditor(target).showQuickFindDialog(target);
+    }
 }

@@ -13,18 +13,18 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import java.text.CharacterIterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jsyntaxpane.SyntaxDocument;
+
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.Segment;
-import jsyntaxpane.SyntaxDocument;
+import java.awt.event.ActionEvent;
+import java.text.CharacterIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author Ayman Al-Sairafi
  */
 public class SmartHomeAction extends DefaultSyntaxAction {
@@ -35,7 +35,7 @@ public class SmartHomeAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         try {
             target.setCaretPosition(getSmartHomeOffset(target, sDoc, dot));
         } catch (BadLocationException ex) {
@@ -44,7 +44,7 @@ public class SmartHomeAction extends DefaultSyntaxAction {
     }
 
     static int getSmartHomeOffset(JTextComponent target, SyntaxDocument sDoc,
-            int dot) throws BadLocationException {
+                                  int dot) throws BadLocationException {
         Element el = sDoc.getParagraphElement(dot);
         Segment seg = new Segment();
         sDoc.getText(el.getStartOffset(),
@@ -64,8 +64,8 @@ public class SmartHomeAction extends DefaultSyntaxAction {
         // otherwise, we move to first char of line
         if (dotLineOffset == 0 || inText) {
             for (char ch = seg.first();
-                    ch != CharacterIterator.DONE && Character.isWhitespace(ch);
-                    ch = seg.next()) {
+                 ch != CharacterIterator.DONE && Character.isWhitespace(ch);
+                 ch = seg.next()) {
                 homeOffset++;
             }
         }

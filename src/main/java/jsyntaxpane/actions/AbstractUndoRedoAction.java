@@ -46,12 +46,12 @@ public abstract class AbstractUndoRedoAction extends DefaultSyntaxAction {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             // if (e.getPropertyName().equals("document")) {
-                removeDocument();
-                Object newDoc = e.getNewValue();
-                if (newDoc instanceof SyntaxDocument) {
-                    setDocument((SyntaxDocument) newDoc);
-                    // editor.removePropertyChangeListener("document", docListener);
-                }
+            removeDocument();
+            Object newDoc = e.getNewValue();
+            if (newDoc instanceof SyntaxDocument) {
+                setDocument((SyntaxDocument) newDoc);
+                // editor.removePropertyChangeListener("document", docListener);
+            }
 //            } else {
 //                System.out.println(e.getPropertyName() + " " + e.getNewValue());
 //            }

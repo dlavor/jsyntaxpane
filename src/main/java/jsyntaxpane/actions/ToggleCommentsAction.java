@@ -14,21 +14,22 @@
  */
 package jsyntaxpane.actions;
 
+import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
 
 /**
  * This action will toggle comments on or off on selected whole lines.
- * 
+ *
  * @author Ayman Al-Sairafi, Hanns Holger Rutz
  */
 public class ToggleCommentsAction extends DefaultSyntaxAction {
 
-    protected String  lineCommentStart    = "//";
-    protected Pattern lineCommentPattern  = null;
+    protected String lineCommentStart = "//";
+    protected Pattern lineCommentPattern = null;
 
     /**
      * creates new JIndentAction.
@@ -43,9 +44,9 @@ public class ToggleCommentsAction extends DefaultSyntaxAction {
      */
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         if (lineCommentPattern == null) {
-            lineCommentPattern  = Pattern.compile("(^\\s*)(" + lineCommentStart + "\\s?)(.*)");
+            lineCommentPattern = Pattern.compile("(^\\s*)(" + lineCommentStart + "\\s?)(.*)");
         }
         String[] lines = ActionUtils.getSelectedLines(target);
         int start = target.getSelectionStart();
@@ -76,7 +77,7 @@ public class ToggleCommentsAction extends DefaultSyntaxAction {
 
     public void setLineComments(String value) {
         String v1 = value.replace("\"", "");
-        lineCommentStart   = v1.charAt(v1.length() - 1) == ' ' ? v1.substring(0, v1.length() - 1) : v1;
+        lineCommentStart = v1.charAt(v1.length() - 1) == ' ' ? v1.substring(0, v1.length() - 1) : v1;
         lineCommentPattern = null;
     }
 }

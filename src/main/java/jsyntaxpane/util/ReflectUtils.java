@@ -13,12 +13,7 @@
  */
 package jsyntaxpane.util;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Member;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +22,14 @@ import java.util.logging.Logger;
 
 /**
  * Reflection Utility methods
+ *
  * @author Ayman Al-Sairafi
  */
 public class ReflectUtils {
 
     /**
      * Adds all methods (from Class.getMethodCalls) to the list
+     *
      * @param aClass
      * @param list
      * @return number of methods added
@@ -47,6 +44,7 @@ public class ReflectUtils {
 
     /**
      * Adds all static methods (from Class.getMethodCalls) to the list
+     *
      * @param aClass
      * @param list
      * @return number of methods added
@@ -63,6 +61,7 @@ public class ReflectUtils {
 
     /**
      * Adds all static Fields (from Class.getFields) to the list
+     *
      * @param aClass
      * @param list
      * @return number of fields added
@@ -79,6 +78,7 @@ public class ReflectUtils {
 
     /**
      * Adds all Fields (from Class.getFields) to the list
+     *
      * @param aClass
      * @param list
      * @return number of fields added
@@ -93,6 +93,7 @@ public class ReflectUtils {
 
     /**
      * Adds all Constructor (from Class.getConstructorCalls) to the list
+     *
      * @param aClass
      * @param list
      * @return number of constructors added
@@ -108,6 +109,7 @@ public class ReflectUtils {
     /**
      * Convert the constructor to a Java Code String
      * (arguments are replaced by the simple types)
+     *
      * @param c Constructor
      * @return
      */
@@ -121,6 +123,7 @@ public class ReflectUtils {
     /**
      * Convert the Method to a Java Code String
      * (arguments are replaced by the simple types)
+     *
      * @param method Method
      * @return
      */
@@ -134,6 +137,7 @@ public class ReflectUtils {
     /**
      * Adds the class SimpleNames, comma sepearated and surrounded by paranthesis to the
      * call StringBuffer
+     *
      * @param call
      * @param params
      * @return
@@ -155,6 +159,7 @@ public class ReflectUtils {
 
     /**
      * Gets a String array of all method calls for the given class
+     *
      * @param aClass
      * @return
      */
@@ -169,6 +174,7 @@ public class ReflectUtils {
 
     /**
      * Gets an array of all Constructor calls for the given class
+     *
      * @param aClass
      * @return
      */
@@ -185,6 +191,7 @@ public class ReflectUtils {
     /**
      * Return a paranthesis enclosed, comma sepearated String of all
      * SimpleClass names in params.
+     *
      * @param params
      * @return
      */
@@ -197,8 +204,9 @@ public class ReflectUtils {
     /**
      * Attempt to find the given className within any of the packages.
      * If the class is not found, then null is returned
+     *
      * @param className Fully or partially qualified classname within any of the packages
-     * @param packages List of packages for search
+     * @param packages  List of packages for search
      * @return CLass object or null if not found.
      */
     public static Class findClass(String className, List<String> packages) {
@@ -228,10 +236,11 @@ public class ReflectUtils {
      * performance is not of an issue.</b>
      * You can check the return value to see if the call was seuccessful or
      * not.
-     * @param obj Object to receive the call
+     *
+     * @param obj      Object to receive the call
      * @param property property name (without set. First letter will be
-     * capitalized)
-     * @param value Value of the property.
+     *                 capitalized)
+     * @param value    Value of the property.
      * @return
      */
     public static boolean callSetter(Object obj, String property, Object value) {
@@ -239,13 +248,13 @@ public class ReflectUtils {
                 property, value.getClass().getName());
         Method m = null;
         boolean result = false;
-        if(!SETTERS_MAP.containsKey(key)) {
+        if (!SETTERS_MAP.containsKey(key)) {
             m = findMethod(obj, property, value);
             SETTERS_MAP.put(key, m);
         } else {
             m = SETTERS_MAP.get(key);
         }
-        if(m != null) {
+        if (m != null) {
             try {
                 m.invoke(obj, value);
                 result = true;
@@ -261,7 +270,7 @@ public class ReflectUtils {
     }
 
     private static synchronized Method findMethod(Object obj,
-            String property, Object value) {
+                                                  String property, Object value) {
         Method m = null;
         Class<?> theClass = obj.getClass();
         String setter = String.format("set%C%s",
@@ -285,6 +294,7 @@ public class ReflectUtils {
         }
         return m;
     }
+
     public static final List<String> DEFAULT_PACKAGES = new ArrayList<String>(3);
 
     static {
@@ -292,6 +302,7 @@ public class ReflectUtils {
         DEFAULT_PACKAGES.add("java.util");
         DEFAULT_PACKAGES.add("jsyntaxpane");
     }
+
     /**
      * To speed up find setter methods, this map will be used.
      * The Key String will be of the format objectClass.property(valueclass)

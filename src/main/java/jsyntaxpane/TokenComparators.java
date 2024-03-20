@@ -18,38 +18,39 @@ import java.util.Comparator;
 
 /**
  * Two comparators to compare Tokens.
+ *
  * @author Ayman Al-Sairafi
  */
 public class TokenComparators {
 
-	public static final Comparator<Token> LONGEST_FIRST = new LongestFirst();
-	public static final Comparator<Token> SHORTEST_FIRST = new ShortestFirst();
+    public static final Comparator<Token> LONGEST_FIRST = new LongestFirst();
+    public static final Comparator<Token> SHORTEST_FIRST = new ShortestFirst();
 
-	private static class LongestFirst implements Comparator<Token>, Serializable {
+    private static class LongestFirst implements Comparator<Token>, Serializable {
 
-		@Override
-		public int compare(Token t1, Token t2) {
-			if (t1.start != t2.start) {
-				return (t1.start - t2.start);
-			} else if (t1.length != t2.length) {
-				return (t2.length - t1.length);
-			} else {
-				return t1.type.compareTo(t2.type);
-			}
-		}
-	}
+        @Override
+        public int compare(Token t1, Token t2) {
+            if (t1.start != t2.start) {
+                return (t1.start - t2.start);
+            } else if (t1.length != t2.length) {
+                return (t2.length - t1.length);
+            } else {
+                return t1.type.compareTo(t2.type);
+            }
+        }
+    }
 
-	private static class ShortestFirst implements Comparator<Token>, Serializable {
+    private static class ShortestFirst implements Comparator<Token>, Serializable {
 
-		@Override
-		public int compare(Token t1, Token t2) {
-			if (t1.start != t2.start) {
-				return (t1.start - t2.start);
-			} else if (t1.length != t2.length) {
-				return (t1.length - t2.length);
-			} else {
-				return t1.type.compareTo(t2.type);
-			}
-		}
-	}
+        @Override
+        public int compare(Token t1, Token t2) {
+            if (t1.start != t2.start) {
+                return (t1.start - t2.start);
+            } else if (t1.length != t2.length) {
+                return (t1.length - t2.length);
+            } else {
+                return t1.type.compareTo(t2.type);
+            }
+        }
+    }
 }

@@ -13,15 +13,15 @@
  */
 package jsyntaxpane.actions;
 
+import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
 
 /**
- *
  * @author Ayman Al-Sairafi
  */
 public class SmartHomeSelectAction extends DefaultSyntaxAction {
@@ -32,7 +32,7 @@ public class SmartHomeSelectAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         try {
             target.moveCaretPosition(SmartHomeAction.getSmartHomeOffset(target, sDoc, dot));
         } catch (BadLocationException ex) {

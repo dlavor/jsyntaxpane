@@ -16,16 +16,18 @@ package jsyntaxpane.lexers;
 
 import jsyntaxpane.Lexer;
 import jsyntaxpane.Token;
-import java.util.List;
+
 import javax.swing.text.Segment;
+import java.util.List;
 
 /**
  * A lexer that does nothing.  Used for plain document editing.
+ *
  * @author Ayman Al-Sairafi
  */
 public class EmptyLexer implements Lexer {
 
-	@Override
-	public void parse(Segment segment, int ofst, List<Token> tokens) {
-	}
+    @Override
+    public void parse(Segment segment, int ofst, List<Token> tokens) {
+    }
 }

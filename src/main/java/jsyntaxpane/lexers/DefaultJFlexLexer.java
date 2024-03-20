@@ -1,28 +1,29 @@
 /*
  * Copyright 2008 Ayman Al-Sairafi ayman.alsairafi@gmail.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License 
- *       at http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License.  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License
+ *       at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jsyntaxpane.lexers;
 
 import jsyntaxpane.Lexer;
 import jsyntaxpane.Token;
 import jsyntaxpane.TokenType;
+
+import javax.swing.text.Segment;
 import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.Segment;
 
 /**
  * This is a default, and abstract implementation of a Lexer using JFLex
@@ -42,7 +43,7 @@ public abstract class DefaultJFlexLexer implements Lexer {
      * newLength params
      */
     protected Token token(TokenType type, int tStart, int tLength,
-            int newStart, int newLength) {
+                          int newStart, int newLength) {
         tokenStart = newStart;
         tokenLength = newLength;
         return new Token(type, tStart + offset, tLength);
@@ -101,6 +102,7 @@ public abstract class DefaultJFlexLexer implements Lexer {
 
     /**
      * This is called to return the next Token from the Input Reader
+     *
      * @return next token, or null if no more tokens.
      * @throws java.io.IOException
      */
@@ -109,12 +111,11 @@ public abstract class DefaultJFlexLexer implements Lexer {
     /**
      * Returns the character at position <tt>pos</tt> from the
      * matched text.
-     *
+     * <p>
      * It is equivalent to yytext().charAt(pos), but faster
      *
      * @param pos the position of the character to fetch.
      *            A value from 0 to yylength()-1.
-     *
      * @return the character at position pos
      */
     public abstract char yycharat(int pos);

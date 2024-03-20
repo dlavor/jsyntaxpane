@@ -13,40 +13,37 @@
  */
 package jsyntaxpane.lexers;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.text.Segment;
 import jsyntaxpane.Lexer;
 import jsyntaxpane.Token;
 import jsyntaxpane.TokenComparators;
 import jsyntaxpane.TokenType;
 
+import javax.swing.text.Segment;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * This is a "dynamic" Lexer that will use Regex patterns to parse any document,
  * It is NOT as fast as other JFlex generated lexers.
- *
+ * <p>
  * The current implementation is about 20x slower than a JFlex lexer
  * (5000 lines in 100ms, vs 5ms for JFlex lexer)
- *
+ * <p>
  * This is still usable for a few 100 lines.  500 lines parse in about 10ms.
- *
+ * <p>
  * It also depends on how complex the Regexp and how many of them will actually
  * provide a match.
- *
+ * <p>
  * Since KEYWORD TokenType is by order less than IDENTIFIER, the higher
  * precedence of KEYWORD token will be used, even if the same regex matches
  * an IDENTIFIER.  This is a neat side-effect of the ordering of the TokenTypes.
  * We now just need to add any non-overlapping matches.  And since longer matches
  * are found first, we will properly match the longer identifiers which start with
  * a keyword.
- *
+ * <p>
  * This behaviour can easily be modified by overriding the {@link compareTo} method
  *
  * @author Ayman Al-Sairafi
@@ -82,6 +79,7 @@ public class SimpleRegexLexer implements Lexer {
             }
         }
     }
+
     Map<TokenType, Pattern> patterns = new HashMap<TokenType, Pattern>();
 
     public SimpleRegexLexer putPattern(TokenType type, String regex) {

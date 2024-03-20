@@ -13,13 +13,12 @@
  */
 package jsyntaxpane;
 
-import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.Segment;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A Token in a Document.  Tokens do NOT store a reference to the
@@ -42,8 +41,8 @@ public class Token implements Serializable, Comparable {
      * The opening part will have a positive number X
      * The closing part will have a negative number X
      * X should be unique for a pair:
-     *   e.g. for [ pairValue = +1
-     *        for ] pairValue = -1
+     * e.g. for [ pairValue = +1
+     * for ] pairValue = -1
      */
     public final byte pairValue;
     /**
@@ -76,7 +75,7 @@ public class Token implements Serializable, Comparable {
 
     @Override
     public boolean equals(Object obj) {
-		if (obj instanceof Token) {
+        if (obj instanceof Token) {
             Token token = (Token) obj;
             return ((this.start == token.start) &&
                     (this.length == token.length) &&
@@ -114,6 +113,7 @@ public class Token implements Serializable, Comparable {
 
     /**
      * return the end position of the token.
+     *
      * @return start + length
      */
     public int end() {
@@ -130,15 +130,15 @@ public class Token implements Serializable, Comparable {
         } catch (BadLocationException ex) {
             Logger.getLogger(Token.class.getName()).log(Level.SEVERE, null, ex);
         }
-		return text;
+        return text;
     }
 
     public String getString(Document doc) {
         try {
-			return doc.getText(start, length);
+            return doc.getText(start, length);
         } catch (BadLocationException ex) {
             Logger.getLogger(Token.class.getName()).log(Level.SEVERE, null, ex);
-			return "";
+            return "";
         }
     }
 }

@@ -14,18 +14,19 @@
 
 package jsyntaxpane.actions.gui;
 
-import javax.swing.RootPaneContainer;
+import javax.swing.*;
 
 /**
  * This interface is used by dialogs that will need to listen to ESC key.
  * When the ESC key is pressed, escapePressed is called.
+ *
  * @author Ayman Al-Sairafi
  */
 public interface EscapeListener extends RootPaneContainer {
 
-	/**
-	 * This method will be called when ESC key is pressed.
-	 */
-	public void escapePressed();
+    /**
+     * This method will be called when ESC key is pressed.
+     */
+    public void escapePressed();
 
 }

@@ -13,15 +13,17 @@
  */
 package jsyntaxpane.actions;
 
+import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
 
 /**
  * This Action deletes the current line, or all the highlighted lines.
+ *
  * @author Ayman Al-Sairafi
  */
 public class DeleteLinesAction extends DefaultSyntaxAction {
@@ -32,7 +34,7 @@ public class DeleteLinesAction extends DefaultSyntaxAction {
 
     @Override
     public void actionPerformed(JTextComponent target, SyntaxDocument sdoc,
-            int dot, ActionEvent e) {
+                                int dot, ActionEvent e) {
         try {
             int st = sdoc.getLineStartOffset(target.getSelectionStart());
             int en = sdoc.getLineEndOffset(target.getSelectionEnd());

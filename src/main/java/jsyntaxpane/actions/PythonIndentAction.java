@@ -13,10 +13,10 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import javax.swing.text.JTextComponent;
-
 import jsyntaxpane.SyntaxDocument;
+
+import javax.swing.text.JTextComponent;
+import java.awt.event.ActionEvent;
 
 public class PythonIndentAction extends DefaultSyntaxAction {
 
@@ -29,7 +29,8 @@ public class PythonIndentAction extends DefaultSyntaxAction {
 
     /**
      * {@inheritDoc}
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {

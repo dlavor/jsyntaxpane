@@ -1,35 +1,26 @@
 /*
  * Copyright 2008 Ayman Al-Sairafi ayman.alsairafi@gmail.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License 
- *       at http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License.  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License
+ *       at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jsyntaxpane;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Toolkit;
+import jsyntaxpane.util.Configuration;
+
+import javax.swing.text.*;
+import java.awt.*;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
-import javax.swing.text.PlainView;
-import javax.swing.text.Segment;
-import javax.swing.text.ViewFactory;
-import jsyntaxpane.util.Configuration;
 
 public class SyntaxView extends PlainView {
 
@@ -45,7 +36,7 @@ public class SyntaxView extends PlainView {
 
     /**
      * Construct a new view using the given configuration and prefix given
-     * 
+     *
      * @param element
      * @param config
      */
@@ -61,7 +52,7 @@ public class SyntaxView extends PlainView {
 
     @Override
     protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
-            int p1) {
+                                     int p1) {
         setRenderingHits((Graphics2D) graphics);
         Font saveFont = graphics.getFont();
         Color saveColor = graphics.getColor();
@@ -140,6 +131,7 @@ public class SyntaxView extends PlainView {
     /**
      * Sets the Rendering Hints o nthe Graphics.  This is used so that
      * any painters can set the Rendering Hits to match the view.
+     *
      * @param g2d
      */
     public static void setRenderingHits(Graphics2D g2d) {
@@ -148,12 +140,13 @@ public class SyntaxView extends PlainView {
 
     @Override
     protected void updateDamage(javax.swing.event.DocumentEvent changes,
-            Shape a,
-            ViewFactory f) {
+                                Shape a,
+                                ViewFactory f) {
         super.updateDamage(changes, a, f);
         java.awt.Component host = getContainer();
         host.repaint();
     }
+
     /**
      * The values for the string key for Text Anti-Aliasing
      */
@@ -164,7 +157,7 @@ public class SyntaxView extends PlainView {
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             @SuppressWarnings("unchecked")
-            Map<RenderingHints.Key,?> map = (Map<RenderingHints.Key,?>)
+            Map<RenderingHints.Key, ?> map = (Map<RenderingHints.Key, ?>)
                     toolkit.getDesktopProperty("awt.font.desktophints");
             sysHints = new RenderingHints(map);
         } catch (Throwable t) {

@@ -13,25 +13,27 @@
  */
 package jsyntaxpane.util;
 
+import jsyntaxpane.actions.gui.EscapeListener;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-import jsyntaxpane.actions.gui.EscapeListener;
 
 /**
  * As always, some general purpose handy Swing Utility methods
+ *
  * @author Ayman Al-Sairafi
  */
 public class SwingUtils {
 
-	/**
-	 * FIXME:  These two addEscapeListener can be called on a new interface
-	 * that implements RootPainCOntainer (Swing) and a new method that
-	 * is called
-	 * @param dialog
-	 */
+    /**
+     * FIXME:  These two addEscapeListener can be called on a new interface
+     * that implements RootPainCOntainer (Swing) and a new method that
+     * is called
+     *
+     * @param dialog
+     */
     public static void addEscapeListener(final EscapeListener dialog) {
         ActionListener escListener = new ActionListener() {
 

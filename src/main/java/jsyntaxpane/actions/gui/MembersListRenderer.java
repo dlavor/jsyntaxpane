@@ -13,13 +13,11 @@
  */
 package jsyntaxpane.actions.gui;
 
-import java.awt.Color;
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
 
 class MembersListRenderer extends DefaultListCellRenderer {
 
@@ -32,7 +30,7 @@ class MembersListRenderer extends DefaultListCellRenderer {
 
     @Override
     public Component getListCellRendererComponent(final JList list, Object value, final int index,
-            final boolean isSelected, boolean cellHasFocus) {
+                                                  final boolean isSelected, boolean cellHasFocus) {
         Color back = (index % 2 == 1) ? list.getBackground() : evensColor;
         if (value instanceof Method) {
             final Method method = (Method) value;

@@ -16,6 +16,7 @@ package jsyntaxpane;
 
 /**
  * Constants used by Tokens.
+ *
  * @author Ayman Al-Sairafi
  */
 public class TokenConstants {

@@ -13,20 +13,20 @@
  */
 package jsyntaxpane.actions;
 
-import javax.swing.*;
-
 import jsyntaxpane.util.Configuration;
+
+import javax.swing.*;
 
 /**
  * All JSyntaxPane Keyboard related actions implement this class.  These
  * classes are created dynamically, and then registered to the SyntaxKit.
- *
+ * <p>
  * A class may have multiple TextActions that may be related.  Each EditorKit
  * that is installed will have only one instance of each class, even if more
  * than one action is specified.
- *
+ * <p>
  * The key value pairs in the Configuration are of the form:
- *
+ * <p>
  * [EditorKit.]Action.NAME = class, keyboard key
  *
  * @author Ayman Al-Sairafi
@@ -35,9 +35,10 @@ public interface SyntaxAction extends Action {
 
     /**
      * Configure the actions in this class
-     * @param config    the properties from which the action was constructed
-     * @param name      name of the action, (prefixed by Action.) will be obtained from the property Key as the
-     *                  text following the Action.
+     *
+     * @param config the properties from which the action was constructed
+     * @param name   name of the action, (prefixed by Action.) will be obtained from the property Key as the
+     *               text following the Action.
      */
     public void install(JEditorPane editor, Configuration config, String name);
 

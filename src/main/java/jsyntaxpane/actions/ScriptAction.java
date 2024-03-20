@@ -13,20 +13,21 @@
  */
 package jsyntaxpane.actions;
 
-import java.awt.event.ActionEvent;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.regex.Pattern;
+import jsyntaxpane.SyntaxDocument;
+import jsyntaxpane.util.Configuration;
+import jsyntaxpane.util.JarServiceProvider;
+
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
-import jsyntaxpane.SyntaxDocument;
-import jsyntaxpane.util.Configuration;
-import jsyntaxpane.util.JarServiceProvider;
+import java.awt.event.ActionEvent;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.regex.Pattern;
 
 /**
  * This class executes a script every time it is called.
@@ -36,78 +37,79 @@ import jsyntaxpane.util.JarServiceProvider;
  */
 public class ScriptAction extends DefaultSyntaxAction {
 
-	public ScriptAction() {
-		super("scripted-action");
-	}
+    public ScriptAction() {
+        super("scripted-action");
+    }
 
-	@Override
-	public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
-		int dot, ActionEvent e) {
-		if (getValue(SCRIPT_FUNCTION) != null) {
-			String f = getValue(SCRIPT_FUNCTION).toString();
-			try {
-				engine.put("TARGET", target);
-				engine.put("SDOC", sDoc);
-				engine.put("DOT", dot);
-				engine.put("EVENT", e);
-				engine.put("ACTION", this);
-				engine.put("AU", ActionUtils.getInstance());
-				invocable.invokeFunction(f);
-			} catch (ScriptException ex) {
-				showScriptError(target, ex);
-			} catch (NoSuchMethodException ex) {
-				showScriptError(target, ex);
-			}
-		} else {
-			JOptionPane.showMessageDialog(target, java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle")
-                    .getString("ScriptAction.NoScriptConfigured"),
-				java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle")
-                        .getString("ScriptAction.ErrorInScript"), JOptionPane.WARNING_MESSAGE);
-		}
-	}
+    @Override
+    public void actionPerformed(JTextComponent target, SyntaxDocument sDoc,
+                                int dot, ActionEvent e) {
+        if (getValue(SCRIPT_FUNCTION) != null) {
+            String f = getValue(SCRIPT_FUNCTION).toString();
+            try {
+                engine.put("TARGET", target);
+                engine.put("SDOC", sDoc);
+                engine.put("DOT", dot);
+                engine.put("EVENT", e);
+                engine.put("ACTION", this);
+                engine.put("AU", ActionUtils.getInstance());
+                invocable.invokeFunction(f);
+            } catch (ScriptException ex) {
+                showScriptError(target, ex);
+            } catch (NoSuchMethodException ex) {
+                showScriptError(target, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(target, java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle")
+                            .getString("ScriptAction.NoScriptConfigured"),
+                    java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle")
+                            .getString("ScriptAction.ErrorInScript"), JOptionPane.WARNING_MESSAGE);
+        }
+    }
 
-	public void setFunction(String name) {
-		putValue(SCRIPT_FUNCTION, name);
-	}
+    public void setFunction(String name) {
+        putValue(SCRIPT_FUNCTION, name);
+    }
 
-	@Override
-	public void install(JEditorPane editor, Configuration config, String name) {
-		super.install(editor, config, name);
-		// now read and store all of our scripts.
-		for (Configuration.StringKeyMatcher m : config.getKeys(Pattern.compile("Script\\.((\\w|-)+)\\.URL"))) {
-			getScriptFromURL(m.value);
-		}
-	}
+    @Override
+    public void install(JEditorPane editor, Configuration config, String name) {
+        super.install(editor, config, name);
+        // now read and store all of our scripts.
+        for (Configuration.StringKeyMatcher m : config.getKeys(Pattern.compile("Script\\.((\\w|-)+)\\.URL"))) {
+            getScriptFromURL(m.value);
+        }
+    }
 
-	public void getScriptFromURL(String url) {
-		InputStream is = JarServiceProvider.findResource(url, this.getClass().getClassLoader());
-		if (is != null) {
-			Reader reader = new InputStreamReader(is);
-			try {
-				engine.eval(reader);
-			} catch (ScriptException ex) {
-				showScriptError(null, ex);
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle").getString("ScriptAction.NoScriptFoundIn") + url,
-				java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle").getString("ScriptAction.ErrorInScript"), JOptionPane.WARNING_MESSAGE);
-		}
-	}
+    public void getScriptFromURL(String url) {
+        InputStream is = JarServiceProvider.findResource(url, this.getClass().getClassLoader());
+        if (is != null) {
+            Reader reader = new InputStreamReader(is);
+            try {
+                engine.eval(reader);
+            } catch (ScriptException ex) {
+                showScriptError(null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle").getString("ScriptAction.NoScriptFoundIn") + url,
+                    java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle").getString("ScriptAction.ErrorInScript"), JOptionPane.WARNING_MESSAGE);
+        }
+    }
 
-	private void showScriptError(JTextComponent target, Exception ex) {
-		JOptionPane.showMessageDialog(target, ex.getMessage(),
-			java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle").getString("ScriptAction.ErrorInScript"), JOptionPane.WARNING_MESSAGE);
-	}
-	/**
-	 * The key used to store the Script Name for the this action
-	 */
-	static final String SCRIPT_FUNCTION = "SCRIPT_FUNCTION";
-	static final ScriptEngine engine;
-	static final Invocable invocable;
+    private void showScriptError(JTextComponent target, Exception ex) {
+        JOptionPane.showMessageDialog(target, ex.getMessage(),
+                java.util.ResourceBundle.getBundle("jsyntaxpane/Bundle").getString("ScriptAction.ErrorInScript"), JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
+     * The key used to store the Script Name for the this action
+     */
+    static final String SCRIPT_FUNCTION = "SCRIPT_FUNCTION";
+    static final ScriptEngine engine;
+    static final Invocable invocable;
 
 
-	static {
-		engine = new ScriptEngineManager().getEngineByExtension("js");
-		invocable = (Invocable) engine;
-	}
+    static {
+        engine = new ScriptEngineManager().getEngineByExtension("js");
+        invocable = (Invocable) engine;
+    }
 }

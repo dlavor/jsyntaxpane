@@ -1,40 +1,39 @@
 /*
  * Copyright 2008 Ayman Al-Sairafi ayman.alsairafi@gmail.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License 
- *       at http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License.  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License
+ *       at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jsyntaxpane;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import jsyntaxpane.util.Configuration;
+import jsyntaxpane.util.JarServiceProvider;
+
+import javax.swing.text.Segment;
+import javax.swing.text.TabExpander;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import javax.swing.text.Segment;
-import javax.swing.text.TabExpander;
-import jsyntaxpane.util.Configuration;
-import jsyntaxpane.util.JarServiceProvider;
 
 /**
  * The Styles to use for each TokenType.  The defaults are created here, and
  * then the resource META-INF/services/syntaxstyles.properties is read and
  * merged.  You can also pass a properties instance and merge your prefered
  * styles into the default styles.
- *
+ * <p>
  * Text is drawn by forwarding the drawText request to the SyntaxStyle for the
  * that matches the given TokenType
- * 
+ *
  * @author Ayman Al-Sairafi
  */
 public class SyntaxStyles {
@@ -59,12 +58,14 @@ public class SyntaxStyles {
             }
         }
     }
+
     Map<TokenType, SyntaxStyle> styles;
     private static SyntaxStyles instance = createInstance();
     private static final Logger LOG = Logger.getLogger(SyntaxStyles.class.getName());
     private static SyntaxStyle DEFAULT_STYLE = new SyntaxStyle(Color.BLACK, Font.PLAIN);
 
-    private SyntaxStyles() {}
+    private SyntaxStyles() {
+    }
 
     /**
      * Creates default styles
@@ -123,7 +124,7 @@ public class SyntaxStyles {
      * Token.
      */
     public int drawText(Segment segment, int x, int y,
-            Graphics graphics, TabExpander e, Token token) {
+                        Graphics graphics, TabExpander e, Token token) {
         SyntaxStyle s = getStyle(token.type);
         return s.drawText(segment, x, y, graphics, e, token.start);
     }

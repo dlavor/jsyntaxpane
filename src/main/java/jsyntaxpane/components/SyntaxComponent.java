@@ -13,8 +13,9 @@
  */
 package jsyntaxpane.components;
 
-import javax.swing.JEditorPane;
 import jsyntaxpane.util.Configuration;
+
+import javax.swing.*;
 
 /**
  * A Component that is installed to the EditorKit to perform GUI operations
@@ -27,6 +28,7 @@ public interface SyntaxComponent {
     /**
      * Configure the component using the given properties. The keys
      * needed for configuration will be prefixed by the given prefix
+     *
      * @param config configuration data
      */
     public void config(Configuration config);
