@@ -1,1 +1,4 @@
-/jsyntaxpane/target/
+# Project exclude paths
+**/.idea/*
+**/target/**
+*.iml
