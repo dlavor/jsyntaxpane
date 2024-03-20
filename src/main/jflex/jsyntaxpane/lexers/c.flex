@@ -47,7 +47,7 @@ import jsyntaxpane.TokenType;
     private static final byte CURLY     = 3;
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 %}

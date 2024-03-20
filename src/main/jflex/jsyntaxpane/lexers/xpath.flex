@@ -41,7 +41,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -231,14 +231,14 @@ S	   =   	[\u20] | [\u9] | [\uD] | [\uA]
   /* string literal */
   \"                             {
                                     yybegin(STRING_DOUBLE);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 
   /* string literal */
   \'                             {
                                     yybegin(STRING_SINGLE);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
   ":" | {S} | "\""               {}

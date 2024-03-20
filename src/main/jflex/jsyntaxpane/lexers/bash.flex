@@ -46,7 +46,7 @@ import jsyntaxpane.TokenType;
     private static final byte INT_EXPR  = 6;
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 

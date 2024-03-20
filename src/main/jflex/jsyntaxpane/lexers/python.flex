@@ -39,7 +39,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -259,25 +259,25 @@ SQStringCharacter = [^\r\n\'\\]
   /* string literal */
   \"{3}                          {
                                     yybegin(ML_STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 3;
                                  }
 
   \"                             {
                                     yybegin(STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 
   \'{3}                          {
                                     yybegin(SQML_STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 3;
                                  }
 
   \'                             {
                                     yybegin(SQSTRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 

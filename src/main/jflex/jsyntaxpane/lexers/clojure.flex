@@ -39,7 +39,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -421,14 +421,14 @@ SingleCharacter = [^\r\n\'\\]
   /* string literal */
   \"                             {  
                                     yybegin(STRING); 
-                                    tokenStart = yychar; 
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1; 
                                  }
 
   /* character literal */
   \'                             {  
                                     yybegin(CHARLITERAL); 
-                                    tokenStart = yychar; 
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1; 
                                  }
 

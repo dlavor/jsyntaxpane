@@ -63,7 +63,7 @@ public abstract class DefaultJFlexLexer implements Lexer {
      * offset is added to start
      */
     protected Token token(TokenType type) {
-        return new Token(type, yychar() + offset, yylength());
+        return new Token(type, (int) yychar() + offset, yylength());
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class DefaultJFlexLexer implements Lexer {
      * offset is added to start
      */
     protected Token token(TokenType type, int pairValue) {
-        return new Token(type, yychar() + offset, yylength(), (byte) pairValue);
+        return new Token(type, (int) yychar() + offset, yylength(), (byte) pairValue);
     }
 
     /**
@@ -137,5 +137,5 @@ public abstract class DefaultJFlexLexer implements Lexer {
      * This is NOT implemented by JFlex, so the code must be
      * added to create this and return the private yychar field
      */
-    public abstract int yychar();
+    public abstract long yychar();
 }

@@ -38,7 +38,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -273,21 +273,21 @@ RegexCharacter  = [^\r\n\/]
   /* string literal */
   \"{3}                          {
                                     yybegin(ML_STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 3;
                                  }
 
   /* string literal */
   \"                             {  
                                     yybegin(STRING); 
-                                    tokenStart = yychar; 
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1; 
                                  }
 
   /* character literal */
   \'                             {  
                                     yybegin(CHARLITERAL); 
-                                    tokenStart = yychar; 
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1; 
                                  }
 
@@ -309,7 +309,7 @@ RegexCharacter  = [^\r\n\/]
   // JavaDoc comments need a state so that we can highlight the @ controls
   "/**"                          {
                                     yybegin(JDOC);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 3;
                                  }
 
@@ -345,7 +345,7 @@ RegexCharacter  = [^\r\n\/]
                                     // length also includes the trailing quote
                                     int s = tokenStart;
                                     int l = tokenLength;
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 2;
                                     return token(TokenType.STRING, s, l);
                                  }
@@ -368,7 +368,7 @@ RegexCharacter  = [^\r\n\/]
                                     // length also includes the trailing quote
                                     int s = tokenStart;
                                     int l = tokenLength + 1;
-                                    tokenStart = yychar + 1;
+                                    tokenStart = (int) yychar + 1;
                                     tokenLength = 0;
                                     return token(TokenType.STRING2, s, l);
                                  }
@@ -389,7 +389,7 @@ RegexCharacter  = [^\r\n\/]
                                     // length also includes the trailing quote
                                     int s = tokenStart;
                                     int l = tokenLength;
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 2;
                                     return token(TokenType.STRING, s, l);
                                  }
@@ -409,7 +409,7 @@ RegexCharacter  = [^\r\n\/]
                                     // length also includes the trailing quote
                                     int s = tokenStart;
                                     int l = tokenLength + 1;
-                                    tokenStart = yychar + 1;
+                                    tokenStart = (int) yychar + 1;
                                     tokenLength = 0;
                                     return token(TokenType.STRING2, s, l);
                                  }
@@ -441,7 +441,7 @@ RegexCharacter  = [^\r\n\/]
   "@"                            {
                                      yybegin(JDOC_TAG);
                                      int start = tokenStart;
-                                     tokenStart = yychar;
+                                     tokenStart = (int) yychar;
                                      int len = tokenLength;
                                      tokenLength = 1;
                                      return token(TokenType.COMMENT, start, len);
@@ -463,7 +463,7 @@ RegexCharacter  = [^\r\n\/]
                                      yybegin(JDOC);
                                      // length also includes the trailing quote
                                      int start = tokenStart;
-                                     tokenStart = yychar;
+                                     tokenStart = (int) yychar;
                                      int len = tokenLength;
                                      tokenLength = 1;
                                      return token(TokenType.COMMENT2, start, len);

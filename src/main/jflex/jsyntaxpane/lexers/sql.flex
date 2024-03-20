@@ -38,7 +38,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -327,12 +327,12 @@ Reserved =
   /* string literal */
   \"                             {
                                     yybegin(DQ_STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
   \'                             {
                                     yybegin(SQ_STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 

@@ -39,7 +39,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -157,14 +157,14 @@ StringCharacter2 = [^\r\n\'\\]
   {LongStart}				     {
                                    longType = TokenType.STRING;
                                    yybegin(LONGSTRING);
-                                   tokenStart = yychar;
+                                   tokenStart = (int) yychar;
                                    tokenLength = yylength();
                                    longLen = tokenLength;
                                  }
 
   "--"							 {
                                    yybegin(COMMENT);
-                                   tokenStart = yychar;
+                                   tokenStart = (int) yychar;
                                    tokenLength = yylength();
                                  }
 
@@ -172,12 +172,12 @@ StringCharacter2 = [^\r\n\'\\]
   /* string literal */
   \"                             {  
                                     yybegin(STRING1);
-                                    tokenStart = yychar; 
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1; 
                                  }
   \'                             {
                                     yybegin(STRING2);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 

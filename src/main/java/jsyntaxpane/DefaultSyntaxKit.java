@@ -60,10 +60,10 @@ public class DefaultSyntaxKit extends DefaultEditorKit implements ViewFactory {
     private static String MENU_MASK_STRING = "control ";
     private final Lexer lexer;
     private static final Logger LOG = Logger.getLogger(DefaultSyntaxKit.class.getName());
-    private final Map<JEditorPane, List<SyntaxComponent>> editorComponents =
-            new WeakHashMap<JEditorPane, List<SyntaxComponent>>();
+    private final Map<JEditorPane, java.util.List<SyntaxComponent>> editorComponents =
+            new WeakHashMap<>();
     private final Map<JEditorPane, JPopupMenu> popupMenu =
-            new WeakHashMap<JEditorPane, JPopupMenu>();
+            new WeakHashMap<>();
     /**
      * Main Configuration of SyntaxPane EditorKits
      */

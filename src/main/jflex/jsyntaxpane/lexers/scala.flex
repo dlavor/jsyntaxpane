@@ -44,7 +44,7 @@ import jsyntaxpane.TokenType;
     }
 
     @Override
-    public int yychar() {
+    public long yychar() {
         return yychar;
     }
 
@@ -225,14 +225,14 @@ SingleCharacter = [^\r\n\'\\]
   /* string literal */
   \"                             {
                                     yybegin(STRING);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 
   /* character literal */
   \'                             {
                                     yybegin(CHARLITERAL);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 1;
                                  }
 
@@ -254,7 +254,7 @@ SingleCharacter = [^\r\n\'\\]
   // JavaDoc comments need a state so that we can highlight the @ controls
   "/**"                          {
                                     yybegin(JDOC);
-                                    tokenStart = yychar;
+                                    tokenStart = (int) yychar;
                                     tokenLength = 3;
                                  }
 
@@ -311,7 +311,7 @@ SingleCharacter = [^\r\n\'\\]
   "@"                            {
                                      yybegin(JDOC_TAG);
                                      int start = tokenStart;
-                                     tokenStart = yychar;
+                                     tokenStart = (int) yychar;
                                      int len = tokenLength;
                                      tokenLength = 1;
                                      return token(TokenType.COMMENT, start, len);
@@ -333,7 +333,7 @@ SingleCharacter = [^\r\n\'\\]
                                      yybegin(JDOC);
                                      // length also includes the trailing quote
                                      int start = tokenStart;
-                                     tokenStart = yychar;
+                                     tokenStart = (int) yychar;
                                      int len = tokenLength;
                                      tokenLength = 1;
                                      return token(TokenType.COMMENT2, start, len);
